@@ -48,6 +48,7 @@ public class AsyncTaskServiceImpl implements AsyncTaskService {
         AsyncFlowClientData asyncFlowClientData = getAsyncFlowClientData(asyncTaskRequest);
         TSchedulePos taskPos = null;
         try {
+            //1. 获取表号Pos和创建参数中的任务类型，生成表名tableName
             taskPos = tSchedulePosDao.getTaskPos(asyncFlowClientData.getTask_type());
         } catch (Exception e) {
             return ErrorStatusReturn.ERR_GET_TASK_POS;
@@ -55,6 +56,7 @@ public class AsyncTaskServiceImpl implements AsyncTaskService {
         if (taskPos == null) {
             logger.error("db.TaskPosNsp.GetTaskPos failed.");
         }
+            //2. 根据表号Pos和创建参数中的任务类型task_Type，生成表明tableName
         String tableName = getTableName(taskPos.getScheduleEndPos(), asyncFlowClientData.getTask_type());
 
         ScheduleConfig taskTypeCfg;
